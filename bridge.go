@@ -140,7 +140,7 @@ func (b *RegistryBridge) Add(containerId string) {
 				PortType:    p[1],
 				Container:   container,
 			})
-		} else if len(published) > 0 || !*registerExposedPorts {
+		} else if len(published) > 0 || *registerExposedPorts {
 			ports = append(ports, PublishedPort{
 				HostPort:    p[0],
 				HostIP:      container.NetworkSettings.IPAddress,
