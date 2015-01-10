@@ -4,7 +4,7 @@ VERSION=0.3.0
 
 build:
 	mkdir -p stage
-	go build -o stage/registrator
+	GOOS=linux go build -o stage/registrator
 	docker build -t registrator .
 
 release:

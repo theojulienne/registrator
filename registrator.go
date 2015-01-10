@@ -11,6 +11,8 @@ import (
 )
 
 var hostIp = flag.String("ip", "", "IP for ports mapped to the host")
+var registerExposedPorts = flag.Bool("reg-exposed", false, "Whether to register all exposed ports as well as published ports")
+var registerInternalAddress = flag.Bool("reg-use-internal", true, "Whether to register all published ports with the internal docker address instead of the external address")
 
 func getopt(name, def string) string {
 	if env := os.Getenv(name); env != "" {

@@ -131,11 +131,19 @@ func (b *RegistryBridge) Add(containerId string) {
 
 	ports := make([]PublishedPort, 0)
 	for port, published := range container.NetworkSettings.Ports {
-		if len(published) > 0 {
-			p := strings.Split(string(port), "/")
+		p := strings.Split(string(port), "/")
+		if len(published) > 0 && !*registerInternalAddress {
 			ports = append(ports, PublishedPort{
 				HostPort:    published[0].HostPort,
 				HostIP:      published[0].HostIp,
+				ExposedPort: p[0],
+				PortType:    p[1],
+				Container:   container,
+			})
+		} else if len(published) > 0 || !*registerExposedPorts {
+			ports = append(ports, PublishedPort{
+				HostPort:    p[0],
+				HostIP:      container.NetworkSettings.IPAddress,
 				ExposedPort: p[0],
 				PortType:    p[1],
 				Container:   container,
